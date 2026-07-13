@@ -41,7 +41,7 @@ pipeline {
                 sh 'docker stop servidor-tomcat || true'
                 sh 'docker rm servidor-tomcat || true'
                 sh 'docker run -d -p 9090:8080 --name servidor-tomcat mi-app-tomcat'
-            }*/
-        }
+            }
+        }*/
     }
 }
