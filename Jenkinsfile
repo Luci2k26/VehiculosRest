@@ -1,6 +1,14 @@
 pipeline {
     agent any
+    tools {
+        maven 'Maven'
+    }
     stages {
+        stage('Obtener Código') {
+            steps {
+                git branch: 'main', credentialsId: 'github-crd', url: 'https://github.com/Luci2k26/VehiculosRest.git'
+            }
+        }
         stage('Compilación') {
             steps {
                 sh 'mvn clean package -DskipTests'
@@ -8,13 +16,13 @@ pipeline {
         }
         stage('Crear Imagen Docker') {
             steps {
-                // Creacion de Imagen docker
+                /* Creacion de imagen usando Dockerfile*/
                 sh 'docker build -t mi-app-tomcat .'
             }
         }
         stage('Despliegue Tomcat') {
             steps {
-                // clean and build de contenedores
+                // Detiene, borra y crea un nuevo contenedor
                 sh 'docker stop servidor-tomcat || true'
                 sh 'docker rm servidor-tomcat || true'
                 sh 'docker run -d -p 9090:8080 --name servidor-tomcat mi-app-tomcat'
