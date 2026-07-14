@@ -37,5 +37,19 @@ public class VehiculoController {
     public ArrayList<VehiculoModel> getAutos(){
         return this.vehiculoService.getVehiculos();
     }
-   
+
+
+    @PostMapping
+    public VehiculoModel createAuto(@RequestBody VehiculoModel vehiculo) {
+        return this.vehiculoService.save(vehiculo);
+    }
+
+
+    @PutMapping("/{id}")
+    public ResponseEntity<VehiculoModel> updateVehiculo(@PathVariable Long id, @RequestBody VehiculoModel vehiculoDetalles) {
+        VehiculoModel vehiculoActualizado = vehiculoService.update(id, vehiculoDetalles);
+        return ResponseEntity.ok(vehiculoActualizado);
+    }
 }
+
+

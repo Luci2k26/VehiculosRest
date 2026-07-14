@@ -2,6 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+
 package com.vehiculos.VehiculosRest.services;
 import com.vehiculos.VehiculosRest.models.VehiculoModel;
 import com.vehiculos.VehiculosRest.repositories.IVehiculoRepository;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
  *
  * @author Villacura
  */
+
 @Service
 public class VehiculoService {
     @Autowired
@@ -34,8 +36,27 @@ public class VehiculoService {
     public Optional<VehiculoModel> getbyId(Long id){
         return autoRepository.findById(id);
     }
-    
-    
+
+    public VehiculoModel save(VehiculoModel vehiculo) {
+        // .save() de JPA guarda el objeto y lo devuelve persistido
+        return autoRepository.save(vehiculo);
+    }
+    public VehiculoModel update(Long id, VehiculoModel vehiculoDetalles) {
+        // 1. Buscamos si existe
+        VehiculoModel vehiculo = autoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Vehículo no encontrado con ID: " + id));
+
+        // 2. Actualizamos los campos
+        vehiculo.setMarca(vehiculoDetalles.getMarca());
+        vehiculo.setModelo(vehiculoDetalles.getModelo());
+        vehiculo.setAno(vehiculoDetalles.getAno());
+        vehiculo.setColor(vehiculoDetalles.getColor());
+        vehiculo.setTipo_combustible(vehiculoDetalles.getTipo_combustible());
+
+        // 3. Guardamos y retornamos
+        return autoRepository.save(vehiculo);
+    }
+
         public VehiculoModel updateById(VehiculoModel request , Long id) {
         Optional<VehiculoModel> optionalAuto = autoRepository.findById(id);
 
