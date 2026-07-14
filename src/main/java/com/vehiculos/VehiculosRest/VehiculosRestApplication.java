@@ -36,4 +36,4 @@ public class VehiculosRestApplication extends SpringBootServletInitializer {
 	public static void main(String[] args) {
 		SpringApplication.run(VehiculosRestApplication.class, args);
 	}
-}
+}*/
